@@ -52,8 +52,8 @@ class Login extends React.Component {
             Play
 
           </button>
-          <SettingsBtn history={ history } />
         </form>
+        <SettingsBtn history={ history } />
       </div>
     );
   }
