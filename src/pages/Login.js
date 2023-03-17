@@ -26,6 +26,14 @@ class Login extends React.Component {
     });
   };
 
+  gameBegin = async () => {
+    const response = await fetch('https://opentdb.com/api_token.php?command=request');
+    const data = await response.json();
+    localStorage.setItem('token', data.token);
+    const { history } = this.props;
+    history.push('/game');
+  };
+
   render() {
     const { history } = this.props;
     const { isDisabled } = this.state;
@@ -48,6 +56,7 @@ class Login extends React.Component {
             type="button"
             data-testid="btn-play"
             disabled={ isDisabled }
+            onClick={ () => this.gameBegin() }
           >
             Play
 
@@ -60,7 +69,9 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  history: PropTypes.objectOf,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
 }.isRequired;
 
 export default Login;
