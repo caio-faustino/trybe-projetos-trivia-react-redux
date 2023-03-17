@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import SettingsBtn from '../components/SettingsBtn';
 
 class Login extends React.Component {
   state = {
@@ -34,6 +35,7 @@ class Login extends React.Component {
   };
 
   render() {
+    const { history } = this.props;
     const { isDisabled } = this.state;
     return (
       <div>
@@ -60,6 +62,7 @@ class Login extends React.Component {
 
           </button>
         </form>
+        <SettingsBtn history={ history } />
       </div>
     );
   }
