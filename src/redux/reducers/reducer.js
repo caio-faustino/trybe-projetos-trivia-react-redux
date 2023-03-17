@@ -5,4 +5,6 @@ const INITIAL_STATE = {
   gravatarEmail: '',
 };
 
-export const player = (state = INITIAL_STATE) => state;
+const reducer = (state = INITIAL_STATE) => state;
+
+export default reducer;
