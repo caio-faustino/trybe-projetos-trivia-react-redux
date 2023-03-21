@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import Message from '../components/Message';
+import FinalFeedback from '../components/FinalFeedback';
 
 class Feedback extends React.Component {
   render() {
@@ -11,6 +12,7 @@ class Feedback extends React.Component {
       <div>
         <Header playerEmail={ playerEmail } playerName={ playerName } score={ score } />
         <Message acertos={ assertions } />
+        <FinalFeedback points={ score } total={ assertions } />
       </div>
     );
   }
