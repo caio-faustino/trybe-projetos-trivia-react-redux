@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import SettingsBtn from '../components/SettingsBtn';
 
 class Login extends React.Component {
@@ -74,4 +75,4 @@ Login.propTypes = {
   }),
 }.isRequired;
 
-export default Login;
+export default connect(null)(Login);
