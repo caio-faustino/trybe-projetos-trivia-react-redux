@@ -15,13 +15,13 @@ export const FINISH_LOADING = 'FINISH_LOADING';
 //   type: FINISH_LOADING,
 // };
 
-export function fetchToken() {
-  return async () => {
-    const response = await fetch('https://opentdb.com/api_token.php?command=request');
-    const data = await response.json();
-    localStorage.setItem('token', data.token);
-  };
-}
+// export function fetchToken() {
+//   return async () => {
+//     const response = await fetch('https://opentdb.com/api_token.php?command=request');
+//     const data = await response.json();
+//     localStorage.setItem('token', data.token);
+//   };
+// }
 
 // export function fetchQuest(token) {
 //   return async (dispatch) => {
