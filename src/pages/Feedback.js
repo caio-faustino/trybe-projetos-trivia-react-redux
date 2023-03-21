@@ -7,12 +7,18 @@ import FinalFeedback from '../components/FinalFeedback';
 
 class Feedback extends React.Component {
   render() {
-    const { playerEmail, playerName, score, assertions } = this.props;
+    const { playerEmail, playerName, score, assertions, history } = this.props;
     return (
       <div>
         <Header playerEmail={ playerEmail } playerName={ playerName } score={ score } />
         <Message acertos={ assertions } />
         <FinalFeedback points={ score } total={ assertions } />
+        <button
+          data-testid="btn-play-again"
+          onClick={ () => history.push('/') }
+        >
+          Play Again
+        </button>
       </div>
     );
   }
