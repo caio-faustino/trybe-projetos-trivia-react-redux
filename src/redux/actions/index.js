@@ -1,6 +1,13 @@
 export const RECEIVE_QUESTION = 'RECEIVE_QUESTION';
 export const START_LOADING = 'START_LOADING';
 export const FINISH_LOADING = 'FINISH_LOADING';
+export const RECEIVE_NAME = 'RECEIVE_NAME';
+
+export const receiveName = (name, email) => ({
+  type: RECEIVE_NAME,
+  payload: name,
+  email,
+});
 
 // const receiveQuestions = (quest) => ({
 //   type: RECEIVE_QUESTION,

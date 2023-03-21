@@ -1,3 +1,5 @@
+import { RECEIVE_NAME } from '../actions';
+
 const INITIAL_STATE = {
   name: '',
   assertions: '',
@@ -5,6 +7,17 @@ const INITIAL_STATE = {
   gravatarEmail: '',
 };
 
-export const reducer = (state = INITIAL_STATE) => state;
+export const reducer = (state = INITIAL_STATE, action) => {
+  switch (action.type) {
+  case RECEIVE_NAME:
+    return {
+      ...state,
+      name: action.payload,
+      gravatarEmail: action.email,
+    };
+  default:
+    return state;
+  }
+};
 
 export default reducer;
