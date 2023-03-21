@@ -5,6 +5,6 @@ const INITIAL_STATE = {
   gravatarEmail: '',
 };
 
-const reducer = (state = INITIAL_STATE) => state;
+export const reducer = (state = INITIAL_STATE) => state;
 
 export default reducer;
