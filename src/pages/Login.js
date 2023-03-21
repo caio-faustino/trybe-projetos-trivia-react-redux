@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SettingsBtn from '../components/SettingsBtn';
+import { fetchToken } from '../redux/actions';
 
 class Login extends React.Component {
   state = {
@@ -28,10 +29,8 @@ class Login extends React.Component {
   };
 
   gameBegin = async () => {
-    const response = await fetch('https://opentdb.com/api_token.php?command=request');
-    const data = await response.json();
-    localStorage.setItem('token', data.token);
-    const { history } = this.props;
+    const { history, dispatch } = this.props;
+    dispatch(fetchToken());
     history.push('/game');
   };
 

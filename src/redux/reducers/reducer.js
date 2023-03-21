@@ -31,3 +31,6 @@ export const player = (state = INITIAL_STATE, action) => {
     return state;
   }
 };
+const reducer = (state = INITIAL_STATE) => state;
+
+export default reducer;
