@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Questions from '../components/Questions';
+import Header from '../components/Header';
 
 class Game extends React.Component {
   state = {
@@ -17,7 +18,6 @@ class Game extends React.Component {
   RequestQuests = async () => {
     const { history } = this.props;
     const token = localStorage.getItem('token');
-    // dispatch(fetchQuest(token));
     const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
     const data = await response.json();
     const three = 3;
@@ -40,11 +40,12 @@ class Game extends React.Component {
   // };
 
   render() {
-    // const { isLoading } = this.props;
+    const { playerName, playerEmail } = this.props;
     const { isLoading, currentQuestion } = this.state;
     if (isLoading) { return (<p>Carregando...</p>); }
     return (
       <div>
+        <Header playerName={ playerName } playerEmail={ playerEmail } />
         <Questions currQuestion={ currentQuestion } />
       </div>
     );
@@ -54,6 +55,8 @@ class Game extends React.Component {
 const mapStateToProps = (state) => ({
   allQuests: state.allQuests,
   isLoading: state.isLoading,
+  playerName: state.name,
+  playerEmail: state.gravatarEmail,
 });
 
 Game.propTypes = {
