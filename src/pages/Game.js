@@ -6,7 +6,7 @@ import Header from '../components/Header';
 
 class Game extends React.Component {
   state = {
-    // allQuestions: [],
+    allQuestions: [],
     currentQuestion: {},
     isLoading: true,
   };
@@ -26,18 +26,18 @@ class Game extends React.Component {
       history.push('/');
     }
     this.setState({
-      // allQuestions: data.results,
+      allQuestions: data.results,
       currentQuestion: data.results[0],
       isLoading: false,
     });
   };
 
-  // nextQuest = (index = 0) => {
-  //   const { allQuestions } = this.state;
-  //   this.setState({
-  //     currentQuestion: allQuestions[index],
-  //   });
-  // };
+  nextQuest = (index = 0) => {
+    const { allQuestions } = this.state;
+    this.setState({
+      currentQuestion: allQuestions[index],
+    });
+  };
 
   render() {
     const { playerName, playerEmail } = this.props;
@@ -46,7 +46,7 @@ class Game extends React.Component {
     return (
       <div>
         <Header playerName={ playerName } playerEmail={ playerEmail } />
-        <Questions currQuestion={ currentQuestion } />
+        <Questions currQuestion={ currentQuestion } nextQuestion={ this.nextQuest } />
       </div>
     );
   }
