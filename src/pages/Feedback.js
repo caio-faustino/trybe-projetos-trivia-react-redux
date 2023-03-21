@@ -2,13 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
+import Message from '../components/Message';
 
 class Feedback extends React.Component {
   render() {
-    const { playerEmail, playerName, score } = this.props;
+    const { playerEmail, playerName, score, assertions } = this.props;
     return (
       <div>
         <Header playerEmail={ playerEmail } playerName={ playerName } score={ score } />
+        <Message acertos={ assertions } />
       </div>
     );
   }
@@ -18,12 +20,14 @@ const mapStateToProps = (state) => ({
   playerName: state.name,
   playerEmail: state.gravatarEmail,
   score: state.score,
+  assertions: state.assertions,
 });
 
 Feedback.propTypes = {
   playerEmail: PropTypes.string,
   playerName: PropTypes.string,
   score: PropTypes.string,
+  assertions: PropTypes.string,
 }.isRequired;
 
 export default connect(mapStateToProps)(Feedback);
