@@ -6,4 +6,5 @@ const INITIAL_STATE = {
 };
 
 export const reducer = (state = INITIAL_STATE) => state;
+
 export default reducer;
