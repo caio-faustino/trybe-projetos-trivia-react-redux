@@ -54,6 +54,10 @@ describe('Testando a página de Login', () => {
 
     const configButton = screen.getByTestId('btn-settings');
 
-    expect(configButton).toBeDefined();
+    expect(configButton).toBeVisible();
+    expect(configButton).toBeEnabled();
+    userEvent.click(configButton);
+    const { pathname } = history.location;
+    expect(pathname).toBe('/settings');
   });
 });
