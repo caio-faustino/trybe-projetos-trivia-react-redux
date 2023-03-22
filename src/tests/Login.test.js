@@ -50,7 +50,7 @@ describe('Testando a página de Login', () => {
 
   });
   it('Verificando se tem o botão que encaminha para a page settings', () => {
-    renderWithRouterAndRedux(<Login />);
+    const { history } = renderWithRouterAndRedux(<App />);
 
     const configButton = screen.getByTestId('btn-settings');
 
