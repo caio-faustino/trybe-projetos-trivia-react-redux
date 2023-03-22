@@ -8,12 +8,15 @@ class Questions extends React.Component {
     isCorrectAnswer: null,
     time: 30,
     isDisabled: false,
+    score: 0,
   };
 
   componentDidMount() {
+    const { currQuestion } = this.props;
     const oneSecond = 1000;
     this.mixAnswers();
     this.interval = setInterval(this.counter, oneSecond);
+    console.log(currQuestion);
   }
 
   mixAnswers = () => {
@@ -29,10 +32,25 @@ class Questions extends React.Component {
 
   handleAnswerClick = (answer) => {
     const { currQuestion } = this.props;
+    const { time } = this.state;
     const isCorrect = answer === currQuestion.correct_answer;
+    let answerDifficulty = '';
+    if (currQuestion.difficulty === 'easy') {
+      answerDifficulty = 1;
+    } else if (currQuestion.difficulty === 'medium') {
+      answerDifficulty = 2;
+    } else {
+      const number = 3;
+      answerDifficulty = number;
+    }
+    const baseCorrect = 10;
     let answerFeedback = '';
     if (isCorrect) {
       answerFeedback = 'Acertou';
+      const sumScore = baseCorrect + (time * answerDifficulty);
+      this.setState((prevState) => ({
+        score: prevState.score + sumScore,
+      }));
     } else {
       answerFeedback = 'Errou';
     }
@@ -63,7 +81,7 @@ class Questions extends React.Component {
   render() {
     const { currQuestion } = this.props;
     const { category, question } = currQuestion;
-    const { mixedAnswers, isCorrectAnswer, time, isDisabled } = this.state;
+    const { mixedAnswers, isCorrectAnswer, time, isDisabled, score } = this.state;
     return (
       <div>
         <div>
@@ -97,6 +115,10 @@ class Questions extends React.Component {
           <button>Next</button>
           <div className="timer-wrapp">
             <span>{ time }</span>
+          </div>
+          <div>
+            <span>{ score }</span>
+            { console.log(score) }
           </div>
         </div>
       </div>
