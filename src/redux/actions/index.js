@@ -10,7 +10,7 @@ export const receiveName = (name, email) => ({
   email,
 });
 
-export const playerScore = (score) => ({
+export const playerScore = (score = 0) => ({
   type: PLAYER_SCORE,
   payload: score,
 });

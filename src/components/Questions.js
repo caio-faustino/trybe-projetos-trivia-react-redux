@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { playerScore } from '../redux/actions/index';
 import shuffleArray from '../tests/helpers/shuffleArray';
 
 class Questions extends React.Component {
@@ -28,20 +30,49 @@ class Questions extends React.Component {
   };
 
   handleAnswerClick = (answer) => {
-    const { currQuestion } = this.props;
+    const { currQuestion, dispatch } = this.props;
+    const { time } = this.state;
     const isCorrect = answer === currQuestion.correct_answer;
-    let answerFeedback = '';
-    if (isCorrect) {
-      answerFeedback = 'Acertou';
-    } else {
-      answerFeedback = 'Errou';
-    }
+    const updateScore = this.calculateScore(isCorrect, currQuestion.difficulty, time);
+    const feedback = this.displayAnswerFeedback(isCorrect);
     clearInterval(this.interval);
     this.setState({
       isCorrectAnswer: isCorrect,
-      time: `${answerFeedback}`,
+      time: feedback,
       isDisabled: true,
     });
+    if (isCorrect) {
+      dispatch(playerScore(updateScore));
+    } dispatch(playerScore(0));
+  };
+
+  calculateScore = (isCorrect, difficulty, time) => {
+    let addScore = 0;
+    let answerDifficulty = '';
+    const baseCorrect = 10;
+    const magicNumber = 3;
+    if (isCorrect) {
+      if (difficulty === 'easy') {
+        answerDifficulty = 1;
+      } else if (difficulty === 'medium') {
+        answerDifficulty = 2;
+      } else if (difficulty === 'hard') {
+        answerDifficulty = magicNumber;
+      }
+      addScore = baseCorrect + (time * answerDifficulty);
+      return addScore;
+    }
+    return 0;
+  };
+
+  displayAnswerFeedback = (isCorrect) => {
+    let feedback = '';
+    if (isCorrect) {
+      feedback = 'Acertou';
+    } else {
+      feedback = 'Errou';
+    }
+    return feedback;
   };
 
   counter = () => {
@@ -113,4 +144,4 @@ Questions.propTypes = {
   }),
 }.isRequired;
 
-export default Questions;
+export default connect(null)(Questions);
