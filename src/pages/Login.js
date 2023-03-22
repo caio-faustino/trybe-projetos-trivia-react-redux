@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SettingsBtn from '../components/SettingsBtn';
 import { receiveName } from '../redux/actions';
-// import { fetchToken } from '../redux/actions';
 
 class Login extends React.Component {
   state = {

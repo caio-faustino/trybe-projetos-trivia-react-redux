@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { playerScore } from '../redux/actions/index';
 import shuffleArray from '../tests/helpers/shuffleArray';
 
 class Questions extends React.Component {
@@ -8,15 +10,12 @@ class Questions extends React.Component {
     isCorrectAnswer: null,
     time: 30,
     isDisabled: false,
-    score: 0,
   };
 
   componentDidMount() {
-    const { currQuestion } = this.props;
     const oneSecond = 1000;
     this.mixAnswers();
     this.interval = setInterval(this.counter, oneSecond);
-    console.log(currQuestion);
   }
 
   mixAnswers = () => {
@@ -31,35 +30,49 @@ class Questions extends React.Component {
   };
 
   handleAnswerClick = (answer) => {
-    const { currQuestion } = this.props;
+    const { currQuestion, dispatch } = this.props;
     const { time } = this.state;
     const isCorrect = answer === currQuestion.correct_answer;
-    let answerDifficulty = '';
-    if (currQuestion.difficulty === 'easy') {
-      answerDifficulty = 1;
-    } else if (currQuestion.difficulty === 'medium') {
-      answerDifficulty = 2;
-    } else {
-      const number = 3;
-      answerDifficulty = number;
-    }
-    const baseCorrect = 10;
-    let answerFeedback = '';
-    if (isCorrect) {
-      answerFeedback = 'Acertou';
-      const sumScore = baseCorrect + (time * answerDifficulty);
-      this.setState((prevState) => ({
-        score: prevState.score + sumScore,
-      }));
-    } else {
-      answerFeedback = 'Errou';
-    }
+    const updateScore = this.calculateScore(isCorrect, currQuestion.difficulty, time);
+    const feedback = this.displayAnswerFeedback(isCorrect);
     clearInterval(this.interval);
     this.setState({
       isCorrectAnswer: isCorrect,
-      time: `${answerFeedback}`,
+      time: feedback,
       isDisabled: true,
     });
+    if (isCorrect) {
+      dispatch(playerScore(updateScore));
+    } dispatch(playerScore(0));
+  };
+
+  calculateScore = (isCorrect, difficulty, time) => {
+    let addScore = 0;
+    let answerDifficulty = '';
+    const baseCorrect = 10;
+    const magicNumber = 3;
+    if (isCorrect) {
+      if (difficulty === 'easy') {
+        answerDifficulty = 1;
+      } else if (difficulty === 'medium') {
+        answerDifficulty = 2;
+      } else if (difficulty === 'hard') {
+        answerDifficulty = magicNumber;
+      }
+      addScore = baseCorrect + (time * answerDifficulty);
+      return addScore;
+    }
+    return 0;
+  };
+
+  displayAnswerFeedback = (isCorrect) => {
+    let feedback = '';
+    if (isCorrect) {
+      feedback = 'Acertou';
+    } else {
+      feedback = 'Errou';
+    }
+    return feedback;
   };
 
   counter = () => {
@@ -81,7 +94,7 @@ class Questions extends React.Component {
   render() {
     const { currQuestion } = this.props;
     const { category, question } = currQuestion;
-    const { mixedAnswers, isCorrectAnswer, time, isDisabled, score } = this.state;
+    const { mixedAnswers, isCorrectAnswer, time, isDisabled } = this.state;
     return (
       <div>
         <div>
@@ -116,10 +129,6 @@ class Questions extends React.Component {
           <div className="timer-wrapp">
             <span>{ time }</span>
           </div>
-          <div>
-            <span>{ score }</span>
-            { console.log(score) }
-          </div>
         </div>
       </div>
     );
@@ -135,4 +144,4 @@ Questions.propTypes = {
   }),
 }.isRequired;
 
-export default Questions;
+export default connect(null)(Questions);
