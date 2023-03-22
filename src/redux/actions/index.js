@@ -2,11 +2,17 @@ export const RECEIVE_QUESTION = 'RECEIVE_QUESTION';
 export const START_LOADING = 'START_LOADING';
 export const FINISH_LOADING = 'FINISH_LOADING';
 export const RECEIVE_NAME = 'RECEIVE_NAME';
+export const PLAYER_SCORE = 'PLAYER_SCORE';
 
 export const receiveName = (name, email) => ({
   type: RECEIVE_NAME,
   payload: name,
   email,
+});
+
+export const playerScore = (score) => ({
+  type: PLAYER_SCORE,
+  payload: score,
 });
 
 // const receiveQuestions = (quest) => ({

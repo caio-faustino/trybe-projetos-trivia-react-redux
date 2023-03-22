@@ -6,10 +6,14 @@ class Questions extends React.Component {
   state = {
     mixedAnswers: [],
     isCorrectAnswer: null,
+    time: 30,
+    isDisabled: false,
   };
 
   componentDidMount() {
+    const oneSecond = 1000;
     this.mixAnswers();
+    this.interval = setInterval(this.counter, oneSecond);
   }
 
   mixAnswers = () => {
@@ -24,18 +28,42 @@ class Questions extends React.Component {
   };
 
   handleAnswerClick = (answer) => {
-    console.log(answer);
     const { currQuestion } = this.props;
     const isCorrect = answer === currQuestion.correct_answer;
+    let answerFeedback = '';
+    if (isCorrect) {
+      answerFeedback = 'Acertou';
+    } else {
+      answerFeedback = 'Errou';
+    }
+    clearInterval(this.interval);
     this.setState({
       isCorrectAnswer: isCorrect,
+      time: `${answerFeedback}`,
+      isDisabled: true,
     });
+  };
+
+  counter = () => {
+    const { time } = this.state;
+    if (time === 0) {
+      clearInterval(this.interval);
+      this.setState({
+        time: 'Tempo Esgotado',
+        isDisabled: true,
+      });
+    } else {
+      this.setState((prevState) => ({
+        time: prevState.time - 1,
+        isDisabled: false,
+      }));
+    }
   };
 
   render() {
     const { currQuestion } = this.props;
     const { category, question } = currQuestion;
-    const { mixedAnswers, isCorrectAnswer } = this.state;
+    const { mixedAnswers, isCorrectAnswer, time, isDisabled } = this.state;
     return (
       <div>
         <div>
@@ -58,6 +86,7 @@ class Questions extends React.Component {
                   data-testid={ answer !== currQuestion.correct_answer
                     ? `wrong-answer-${i}` : 'correct-answer' }
                   onClick={ () => this.handleAnswerClick(answer) }
+                  disabled={ isDisabled }
                   className={ className }
                 >
                   { answer }
@@ -66,6 +95,9 @@ class Questions extends React.Component {
             })}
           </div>
           <button>Next</button>
+          <div className="timer-wrapp">
+            <span>{ time }</span>
+          </div>
         </div>
       </div>
     );
