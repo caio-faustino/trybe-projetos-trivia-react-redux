@@ -44,12 +44,12 @@ class Game extends React.Component {
   };
 
   render() {
-    const { playerName, playerEmail } = this.props;
+    const { playerName, playerEmail, score } = this.props;
     const { isLoading, currentQuestion } = this.state;
     if (isLoading) { return (<p>Carregando...</p>); }
     return (
       <div>
-        <Header playerName={ playerName } playerEmail={ playerEmail } />
+        <Header playerName={ playerName } playerEmail={ playerEmail } score={ score } />
         <Questions currQuestion={ currentQuestion } nextQuestion={ this.nextQuest } />
       </div>
     );
@@ -57,10 +57,9 @@ class Game extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  allQuests: state.allQuests,
-  isLoading: state.isLoading,
-  playerName: state.name,
-  playerEmail: state.gravatarEmail,
+  playerName: state.player.name,
+  playerEmail: state.player.gravatarEmail,
+  score: state.player.score,
 });
 
 Game.propTypes = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './style/questions.css';
 import Routes from './Routes';
 
 export default function App() {
