@@ -9,6 +9,7 @@ class Game extends React.Component {
     allQuestions: [],
     currentQuestion: {},
     isLoading: true,
+    position: 0,
   };
 
   componentDidMount() {
@@ -32,10 +33,13 @@ class Game extends React.Component {
     });
   };
 
-  nextQuest = (index = 0) => {
-    const { allQuestions } = this.state;
+  nextQuest = () => {
+    this.setState((prev) => ({
+      position: prev.position + 1,
+    }));
+    const { allQuestions, position } = this.state;
     this.setState({
-      currentQuestion: allQuestions[index],
+      currentQuestion: allQuestions[position],
     });
   };
 

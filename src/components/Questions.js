@@ -23,7 +23,7 @@ class Questions extends React.Component {
   };
 
   render() {
-    const { currQuestion } = this.props;
+    const { currQuestion, nextQuestion } = this.props;
     const { category, question } = currQuestion;
     const { mixedAnswers } = this.state;
     return (
@@ -43,7 +43,7 @@ class Questions extends React.Component {
               </button>
             ))}
           </div>
-          <button>Next</button>
+          <button data-testid="btn-next" onClick={ () => nextQuestion() }>Next</button>
         </div>
       </div>
     );
