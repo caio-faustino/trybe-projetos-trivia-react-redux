@@ -44,9 +44,7 @@ describe('Testando a página de Login', () => {
     userEvent.click(buttonInput);
     const { location } = history;
 
-      setTimeout(() => {
-        expect(location.pathname).toBe('/game');
-      }, 1000)
+    expect(location.pathname).toBe('/game');
 
   });
   it('Verificando se tem o botão que encaminha para a page settings', () => {
