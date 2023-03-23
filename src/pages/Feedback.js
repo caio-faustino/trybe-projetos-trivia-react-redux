@@ -4,8 +4,15 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import Message from '../components/Message';
 import FinalFeedback from '../components/FinalFeedback';
+import { clearStore } from '../redux/actions';
 
 class Feedback extends React.Component {
+  playAgain = () => {
+    const { history, dispatch } = this.props;
+    history.push('/');
+    dispatch(clearStore);
+  };
+
   render() {
     const { playerEmail, playerName, score, assertions, history } = this.props;
     return (
@@ -15,7 +22,7 @@ class Feedback extends React.Component {
         <FinalFeedback points={ score } total={ assertions } />
         <button
           data-testid="btn-play-again"
-          onClick={ () => history.push('/') }
+          onClick={ () => this.playAgain() }
         >
           Play Again
         </button>

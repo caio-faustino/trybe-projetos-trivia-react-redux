@@ -1,4 +1,4 @@
-import { RECEIVE_NAME, PLAYER_SCORE, PLAYER_ASSERTION } from '../actions';
+import { RECEIVE_NAME, PLAYER_SCORE, PLAYER_ASSERTION, CLEAR_STORE } from '../actions';
 
 const INITIAL_STATE = {
   player: {
@@ -34,6 +34,15 @@ export const player = (state = INITIAL_STATE, action) => {
       player: {
         ...state.player,
         assertions: Number(state.player.assertions) + 1,
+      },
+    };
+  case CLEAR_STORE:
+    return {
+      ...state,
+      player: {
+        ...state.player,
+        assertions: 0,
+        score: 0,
       },
     };
   default:

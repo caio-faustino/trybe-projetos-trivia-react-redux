@@ -1,5 +1,5 @@
 export const PLAYER_ASSERTION = 'PLAYER_ASSERTION';
-export const START_LOADING = 'START_LOADING';
+export const CLEAR_STORE = 'CLEAR_STORE';
 export const FINISH_LOADING = 'FINISH_LOADING';
 export const RECEIVE_NAME = 'RECEIVE_NAME';
 export const PLAYER_SCORE = 'PLAYER_SCORE';
@@ -19,9 +19,9 @@ export const playerAssertion = ({
   type: PLAYER_ASSERTION,
 });
 
-// const startLoading = {
-//   type: START_LOADING,
-// };
+export const clearStore = {
+  type: CLEAR_STORE,
+};
 
 // const finishLoading = {
 //   type: FINISH_LOADING,
