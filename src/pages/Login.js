@@ -28,16 +28,18 @@ class Login extends React.Component {
     });
   };
 
-  fetApi = async () => {
-    const response = await fetch('https://opentdb.com/api_token.php?command=request');
-    const data = await response.json();
-    localStorage.setItem('token', data.token);
-  };
+  // fetApi = async () => {
+  //   const response = await fetch('https://opentdb.com/api_token.php?command=request');
+  //   const data = await response.json();
+  //   localStorage.setItem('token', data.token);
+  // };
 
   gameBegin = async () => {
     const { history, dispatch } = this.props;
     const { playerName, playerEmail } = this.state;
-    this.fetApi();
+    const response = await fetch('https://opentdb.com/api_token.php?command=request');
+    const data = await response.json();
+    localStorage.setItem('token', data.token);
     dispatch(receiveName(playerName, playerEmail));
     history.push('/game');
   };
