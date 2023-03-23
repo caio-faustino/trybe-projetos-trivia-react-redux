@@ -32,7 +32,7 @@ describe('Testando a página de Login', () => {
 
     expect(buttonInput).not.toBeDisabled();
   });
-  it('Verificando se ao clicar no botão a rota muda', () => {
+  it('Verificando se ao clicar no botão a rota muda', async() => {
     const { history } = renderWithRouterAndRedux(<App />);
 
     const emailInput = screen.getByTestId('input-gravatar-email');
@@ -42,6 +42,9 @@ describe('Testando a página de Login', () => {
     userEvent.type(emailInput, 'felipe@hotmail.com');
     userEvent.type(nameInput, 'felipe');
     userEvent.click(buttonInput);
+
+    await screen.findByText('Carregando...');
+
     const { location } = history;
 
     expect(location.pathname).toBe('/game');
