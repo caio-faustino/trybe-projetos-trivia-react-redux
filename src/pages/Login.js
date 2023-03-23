@@ -28,11 +28,12 @@ class Login extends React.Component {
     });
   };
 
-  // fetApi = async () => {
-  //   const response = await fetch('https://opentdb.com/api_token.php?command=request');
-  //   const data = await response.json();
-  //   localStorage.setItem('token', data.token);
-  // };
+  fetApi = () => {
+    const localRanking = localStorage.getItem('ranking');
+    if (localRanking === null) {
+      localStorage.setItem('ranking', JSON.stringify([]));
+    }
+  };
 
   gameBegin = async () => {
     const { history, dispatch } = this.props;
@@ -40,6 +41,7 @@ class Login extends React.Component {
     const response = await fetch('https://opentdb.com/api_token.php?command=request');
     const data = await response.json();
     localStorage.setItem('token', data.token);
+    this.fetApi();
     dispatch(receiveName(playerName, playerEmail));
     history.push('/game');
   };

@@ -5,6 +5,7 @@ import Questions from '../components/Questions';
 import Header from '../components/Header';
 import { playerAssertion, playerScore } from '../redux/actions/index';
 import shuffleArray from '../tests/helpers/shuffleArray';
+import { setLocalRanking } from '../tests/helpers/localStorage';
 
 class Game extends React.Component {
   state = {
@@ -112,7 +113,6 @@ class Game extends React.Component {
 
   mixAnswers = () => {
     const { currentQuestion } = this.state;
-    console.log(currentQuestion);
     const answers = [];
     answers.push(currentQuestion.correct_answer);
     answers.push(...currentQuestion.incorrect_answers);
@@ -124,7 +124,7 @@ class Game extends React.Component {
   };
 
   nextQuest = () => {
-    const { history } = this.props;
+    const { history, playerName, playerEmail, score } = this.props;
     this.setState((prev) => ({
       position: prev.position + 1,
     }), () => {
@@ -145,6 +145,7 @@ class Game extends React.Component {
         this.setState({
           position: 0,
         });
+        setLocalRanking(playerName, playerEmail, score);
       }
       this.setState({
         isLoading: false,
