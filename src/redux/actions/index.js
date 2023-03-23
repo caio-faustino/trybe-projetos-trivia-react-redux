@@ -1,4 +1,4 @@
-export const RECEIVE_QUESTION = 'RECEIVE_QUESTION';
+export const PLAYER_ASSERTION = 'PLAYER_ASSERTION';
 export const START_LOADING = 'START_LOADING';
 export const FINISH_LOADING = 'FINISH_LOADING';
 export const RECEIVE_NAME = 'RECEIVE_NAME';
@@ -15,10 +15,9 @@ export const playerScore = (score = 0) => ({
   payload: score,
 });
 
-// const receiveQuestions = (quest) => ({
-//   type: RECEIVE_QUESTION,
-//   payload: quest,
-// });
+export const playerAssertion = ({
+  type: PLAYER_ASSERTION,
+});
 
 // const startLoading = {
 //   type: START_LOADING,

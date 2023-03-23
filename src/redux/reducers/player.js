@@ -1,9 +1,9 @@
-import { RECEIVE_NAME, PLAYER_SCORE } from '../actions';
+import { RECEIVE_NAME, PLAYER_SCORE, PLAYER_ASSERTION } from '../actions';
 
 const INITIAL_STATE = {
   player: {
     name: '',
-    assertions: '',
+    assertions: 0,
     score: 0,
     gravatarEmail: '',
   },
@@ -26,6 +26,14 @@ export const player = (state = INITIAL_STATE, action) => {
       player: {
         ...state.player,
         score: state.player.score + action.payload,
+      },
+    };
+  case PLAYER_ASSERTION:
+    return {
+      ...state,
+      player: {
+        ...state.player,
+        assertions: Number(state.player.assertions) + 1,
       },
     };
   default:

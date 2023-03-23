@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Questions from '../components/Questions';
 import Header from '../components/Header';
-import { playerScore } from '../redux/actions/index';
+import { playerAssertion, playerScore } from '../redux/actions/index';
 import shuffleArray from '../tests/helpers/shuffleArray';
 
 class Game extends React.Component {
@@ -57,6 +57,7 @@ class Game extends React.Component {
     });
     if (isCorrect) {
       dispatch(playerScore(updateScore));
+      dispatch(playerAssertion);
     } dispatch(playerScore(0));
     this.setState({
       buttonNext: true,
