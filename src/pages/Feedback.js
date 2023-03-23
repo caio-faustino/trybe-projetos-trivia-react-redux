@@ -31,10 +31,10 @@ class Feedback extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  playerName: state.name,
-  playerEmail: state.gravatarEmail,
-  score: state.score,
-  assertions: state.assertions,
+  playerName: state.player.name,
+  playerEmail: state.player.gravatarEmail,
+  score: state.player.score,
+  assertions: state.player.assertions,
 });
 
 Feedback.propTypes = {

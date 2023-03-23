@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Questions from '../components/Questions';
 import Header from '../components/Header';
-import { playerScore } from '../redux/actions/index';
+import { playerAssertion, playerScore } from '../redux/actions/index';
+import shuffleArray from '../tests/helpers/shuffleArray';
 
 class Game extends React.Component {
   state = {
+    mixedAnswers: [],
     allQuestions: [],
     currentQuestion: {},
     isLoading: true,
@@ -36,8 +38,8 @@ class Game extends React.Component {
     this.setState({
       allQuestions: data.results,
       currentQuestion: data.results[0],
-      isLoading: false,
-    });
+      // isLoading: false,
+    }, () => this.mixAnswers());
   };
 
   handleAnswerClick = (answer) => {
@@ -55,6 +57,7 @@ class Game extends React.Component {
     });
     if (isCorrect) {
       dispatch(playerScore(updateScore));
+      dispatch(playerAssertion);
     } dispatch(playerScore(0));
     this.setState({
       buttonNext: true,
@@ -97,6 +100,7 @@ class Game extends React.Component {
       this.setState({
         time: 'Tempo Esgotado',
         isDisabled: true,
+        buttonNext: true,
       });
     } else {
       this.setState((prevState) => ({
@@ -106,20 +110,52 @@ class Game extends React.Component {
     }
   };
 
+  mixAnswers = () => {
+    const { currentQuestion } = this.state;
+    console.log(currentQuestion);
+    const answers = [];
+    answers.push(currentQuestion.correct_answer);
+    answers.push(...currentQuestion.incorrect_answers);
+    const mixed = shuffleArray(answers);
+    this.setState({
+      mixedAnswers: mixed,
+      isLoading: false,
+    });
+  };
+
   nextQuest = () => {
+    const { history } = this.props;
     this.setState((prev) => ({
       position: prev.position + 1,
-    }));
-    const { allQuestions, position } = this.state;
-    this.setState({
-      currentQuestion: allQuestions[position],
+    }), () => {
+      const { allQuestions, position } = this.state;
+      const oneSecond = 1000;
+      this.interval = setInterval(this.counter, oneSecond);
+      if (position < allQuestions.length) {
+        this.setState({
+          isLoading: true,
+          isDisabled: false,
+          buttonNext: false,
+          time: 30,
+          isCorrectAnswer: null,
+          currentQuestion: allQuestions[position],
+        }, () => this.mixAnswers());
+      } else {
+        history.push('/feedback');
+        this.setState({
+          position: 0,
+        });
+      }
+      this.setState({
+        isLoading: false,
+      });
     });
   };
 
   render() {
     const { playerName, playerEmail, score } = this.props;
     const { isLoading, currentQuestion, isCorrectAnswer,
-      isDisabled, buttonNext } = this.state;
+      isDisabled, buttonNext, mixedAnswers } = this.state;
     if (isLoading) { return (<p>Carregando...</p>); }
     return (
       <div>
@@ -131,6 +167,7 @@ class Game extends React.Component {
           isCorrectAnswer={ isCorrectAnswer }
           isDisabled={ isDisabled }
           buttonNext={ buttonNext }
+          mixedAnswers={ mixedAnswers }
         />
       </div>
     );
