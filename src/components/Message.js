@@ -5,8 +5,16 @@ class Message extends React.Component {
   render() {
     const { acertos } = this.props;
     const three = 3;
-    if (acertos < three) { return (<p>Could be better...</p>); }
-    return (<p>Well Done!</p>);
+    if (acertos < three) {
+      return (
+        <p
+          data-testid="feedback-text"
+        >
+          Could be better...
+        </p>
+      );
+    }
+    return (<p data-testid="feedback-text">Well Done!</p>);
   }
 }
 
